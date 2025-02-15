@@ -1,0 +1,17 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+df  = pd.read_csv('/content/diabetics.csv')
+df.head()
+df.drop(columns=['Pregnancies','Glucose','BloodPressure','SkinThickness','Insulin','BMI','DiabetesPedigreeFunction'],inplace=True)
+plt.scatter(df['Age'],df['Outcome'])
+plt.show()
+model = LogisticRegression()
+x_train,x_test,y_train,y_test = train_test_split(df[['Age']],df.Outcome,test_size=0.2)
+model.fit(x_train,y_train)
+y_pred = model.predict(x_test)
+acc = accuracy_score(y_test,y_pred)
+acc
